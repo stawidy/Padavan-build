@@ -33,6 +33,11 @@ jobs:
         TNAME: MR2600-5.0
       run: |
         cd /opt/rt-n56u/trunk
+        if [ ! -f configs/templates/$TNAME.config ] ; then
+        echo "configs/templates/$TNAME.config not found "
+        exit 1
+        fi
+        cp -f configs/templates/$TNAME.config .config
         ./clear_tree
         fakeroot ./build_firmware_modify $TNAME
         sudo mv -f images/*.trx /opt/images/
